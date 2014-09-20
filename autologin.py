@@ -38,8 +38,7 @@ class AutoLogin:
         weblogin = [ l for l in lines if 'rc=100' in l]
         if len(weblogin) != 0:
             self.loggedIn = True
-            print 'logged in', len(weblogin)
-            self._getTransfer(lines)
+            self._get_transfer(lines)
             syslog.syslog(syslog.LOG_INFO, 'Logged with user %s, dl: %s, ul: %s' % (self.username, self.downloadLimit, self.uploadLimit))
         else:
             print 'max loggin excessed'
