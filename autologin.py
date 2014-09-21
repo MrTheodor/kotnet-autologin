@@ -14,7 +14,7 @@ import syslog
 import random
 
 
-class AutoLogin:
+class KotNetLogin:
     """Class for login into the KU KotNet."""
     br = mechanize.Browser()
     loggedIn = False
@@ -41,7 +41,7 @@ class AutoLogin:
             self._get_transfer(lines)
             syslog.syslog(syslog.LOG_INFO, 'Logged with user %s, dl: %s, ul: %s' % (self.username, self.downloadLimit, self.uploadLimit))
         else:
-            print 'max loggin excessed'
+            syslog.syslog(syslog.LOG_INFO, 'max loggin excessed')
             self.loggedIn = False
 
     def _get_transfer(self, lines):
@@ -73,7 +73,7 @@ def main():
     random.shuffle(userlogins)
     for user, password in userlogins:
         print 'Login with user', user
-        c = Login(user, password)
+        c = KotNetLogin(user, password)
         c.login()
         if c.downloadLimit > 1024 and c.uploadLimit > 1024:
             syslog.syslog(syslog.LOG_NOTICE, '%s;keep %s' % (time.strftime('%Y-%m-%d %H:%M:%S'), user))
